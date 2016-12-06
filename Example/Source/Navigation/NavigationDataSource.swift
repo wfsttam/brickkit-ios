@@ -54,6 +54,7 @@ class NavigationDataSource {
             FillBrickViewController.self,
             MultiSectionBrickViewController.self,
             MultiDimensionBrickViewController.self,
+            AlignmentBrickViewController.self
             ]),
         self.InteractiveExamples,
         NavigationItem(title: "Sticky", subTitle: "Examples of different sticky behaviors", viewControllers: [

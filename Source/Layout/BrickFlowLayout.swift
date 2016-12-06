@@ -388,6 +388,10 @@ extension BrickFlowLayout: BrickLayoutSectionDataSource {
         return _dataSource.brickLayout(self, isAlignRowHeightsForSection: section.sectionIndex)
     }
 
+    func aligment(in section: BrickLayoutSection) -> BrickAlignment {
+        return _dataSource.brickLayout(self, alignmentForSection: section.sectionIndex)
+    }
+
     func identifier(for index: Int, in section: BrickLayoutSection) -> String {
         return _dataSource.brickLayout(self, identifierForIndexPath: NSIndexPath(forItem: index, inSection: section.sectionIndex))
     }
@@ -402,7 +406,6 @@ extension BrickFlowLayout: BrickLayoutSectionDataSource {
 
         return width
     }
-
 
     func prepareForSizeCalculation(for attributes: BrickLayoutAttributes, containedIn width: CGFloat, origin: CGPoint, invalidate: Bool, in section: BrickLayoutSection, updatedAttributes: OnAttributesUpdatedHandler?) {
         let indexPath = attributes.indexPath
@@ -423,6 +426,10 @@ extension BrickFlowLayout: BrickLayoutSectionDataSource {
                 updateNumberOfItems(brickSection)
                 if brickSection.sectionWidth != width {
                     brickSection.setSectionWidth(width, updatedAttributes: updatedAttributes)
+                } else if brickSection.origin.x != origin.x {
+                    // Check if the x-origin didn't change (BrickAlignment)
+                    // Do not check on y-origin, because that could have been changed by a behavior
+                    brickSection.setOrigin(CGPoint(x: origin.x, y: brickSection.origin.y), fromBehaviors: false, updatedAttributes: updatedAttributes)
                 } else if invalidate  {
                     brickSection.invalidateAttributes(updatedAttributes)
                 }
