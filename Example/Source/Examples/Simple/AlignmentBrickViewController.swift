@@ -46,23 +46,19 @@ class AlignmentBrickViewController: BrickViewController {
         self.brickCollectionView.registerBrickClass(LabelBrick.self)
         self.brickCollectionView.registerBrickClass(SegmentHeaderBrick.self)
 
-        let configureCell: (cell: LabelBrickCell) -> Void = { cell in
-            cell.configure()
-        }
-
         brickSection1 = BrickSection(backgroundColor: .brickGray1, bricks: [
-            LabelBrick(width: .Fixed(size: 60), height: .Fixed(size: 100), backgroundColor: .brickGray2, text: "BRICK", configureCellBlock: configureCell),
-            LabelBrick(width: .Fixed(size: 60), height: .Fixed(size: 100), backgroundColor: .brickGray2, text: "BRICK", configureCellBlock: configureCell),
-            LabelBrick(width: .Fixed(size: 60), height: .Fixed(size: 100), backgroundColor: .brickGray2, text: "BRICK", configureCellBlock: configureCell),
+            LabelBrick(width: .Fixed(size: 60), height: .Fixed(size: 100), backgroundColor: .brickGray2, text: "BRICK", configureCellBlock: LabelBrickCell.configure),
+            LabelBrick(width: .Fixed(size: 60), height: .Fixed(size: 100), backgroundColor: .brickGray2, text: "BRICK", configureCellBlock: LabelBrickCell.configure),
+            LabelBrick(width: .Fixed(size: 60), height: .Fixed(size: 100), backgroundColor: .brickGray2, text: "BRICK", configureCellBlock: LabelBrickCell.configure),
             ], inset: 10)
 
         brickSection2 = BrickSection(backgroundColor: .brickGray1, bricks: [
-            LabelBrick(width: .Ratio(ratio: 1/3), height: .Fixed(size: 100), backgroundColor: .brickGray2, text: "BRICK", configureCellBlock: configureCell),
-            LabelBrick(width: .Ratio(ratio: 1/3), height: .Fixed(size: 100), backgroundColor: .brickGray2, text: "BRICK", configureCellBlock: configureCell),
+            LabelBrick(width: .Ratio(ratio: 1/3), height: .Fixed(size: 100), backgroundColor: .brickGray2, text: "BRICK", configureCellBlock: LabelBrickCell.configure),
+            LabelBrick(width: .Ratio(ratio: 1/3), height: .Fixed(size: 100), backgroundColor: .brickGray2, text: "BRICK", configureCellBlock: LabelBrickCell.configure),
             ], inset: 10)
 
         brickSection3 = BrickSection(backgroundColor: .brickGray1, bricks: [
-            LabelBrick(BrickIdentifiers.repeatLabel, width: .Ratio(ratio: 1/3), height: .Fixed(size: 100), backgroundColor: .brickGray2, text: "BRICK", configureCellBlock: configureCell),
+            LabelBrick(BrickIdentifiers.repeatLabel, width: .Ratio(ratio: 1/3), height: .Fixed(size: 100), backgroundColor: .brickGray2, text: "BRICK", configureCellBlock: LabelBrickCell.configure),
             ], inset: 10)
 
         brickSection3.repeatCountDataSource = self
