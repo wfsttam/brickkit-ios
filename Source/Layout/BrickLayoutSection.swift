@@ -537,6 +537,10 @@ internal class BrickLayoutSection {
     }
 
     func printAttributes() {
+        guard attributes.count < 100 else {
+            // Prevent that the "Huge" test aren't taking forever to complete
+            return
+        }
         print("\n")
         print("Attributes for section \(sectionIndex) in \(dataSource)")
         print("Number of attributes: \(attributes.count) in \(_dataSource.frameOfInterest)")
