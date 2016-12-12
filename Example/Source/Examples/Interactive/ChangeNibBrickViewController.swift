@@ -99,9 +99,9 @@ class ChangeNibBrickViewController: BrickViewController, LabelBrickCellDataSourc
         repeatBrick.width = .Ratio(ratio: widthRatio)
 
         if reload {
-            UIView.performWithoutAnimation {
+//            UIView.performWithoutAnimation {
                 brickCollectionView.invalidateBricks()
-            }
+//            }
         }
     }
     

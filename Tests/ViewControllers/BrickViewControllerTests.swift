@@ -632,9 +632,8 @@ class BrickViewControllerTests: XCTestCase {
 
         var cell: DummyBrickCell?
         cell = brickViewController.brickCollectionView.cellForItemAtIndexPath(NSIndexPath(forItem: 0, inSection: 1)) as? DummyBrickCell
-        let width = brickViewController.brickCollectionView.frame.width / 10
-        XCTAssertEqualWithAccuracy(cell!.frame.width, width, accuracy: 0.01)
-        XCTAssertEqualWithAccuracy(cell?.frame.height ?? 0, width * 2, accuracy: 0.5)
+        XCTAssertEqualWithAccuracy(cell!.frame.width, 32, accuracy: 0.01)
+        XCTAssertEqualWithAccuracy(cell?.frame.height ?? 0, 64, accuracy: 0.5)
 
         brick.size.width = .Ratio(ratio: 1/5)
 
@@ -646,11 +645,9 @@ class BrickViewControllerTests: XCTestCase {
 
         waitForExpectationsWithTimeout(5, handler: nil)
 
-        brickViewController.brickCollectionView.layoutIfNeeded()
-
         cell = brickViewController.brickCollectionView.cellForItemAtIndexPath(NSIndexPath(forItem: 0, inSection: 1)) as? DummyBrickCell
-        XCTAssertEqualWithAccuracy(cell?.frame.width ?? 0, width * 2, accuracy: 0.1)
-        XCTAssertEqualWithAccuracy(cell?.frame.height ?? 0 , width * 4, accuracy: 0.1)
+        XCTAssertEqualWithAccuracy(cell?.frame.width ?? 0, 64, accuracy: 0.1)
+        XCTAssertEqualWithAccuracy(cell?.frame.height ?? 0 , 128, accuracy: 0.1)
     }
 
     #if os(tvOS)

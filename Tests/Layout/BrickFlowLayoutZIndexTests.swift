@@ -870,4 +870,54 @@ extension BrickFlowLayoutZIndexTests {
 
         XCTAssertEqual(layout.maxZIndex, 15)
     }
+
+    func testThatInvalidateRepeatCountWithBottomStickyRespectsZIndex() {
+        let repeatIndexPath = NSIndexPath(forItem: 15, inSection: 2)
+        let stickyIndexPath = NSIndexPath(forItem: 1, inSection: 1)
+
+        collectionView.registerBrickClass(DummyBrick.self)
+        let section = BrickSection(bricks: [
+            BrickSection(bricks: [
+                DummyBrick("Brick", height: .Fixed(size: 20))
+                ]),
+            DummyBrick("Footer", height: .Fixed(size: 50))
+            ])
+        let repeatCountDataSource = FixedRepeatCountDataSource(repeatCountHash: ["Brick": 15])
+        section.repeatCountDataSource = repeatCountDataSource
+        let stickyDataSource = FixedStickyLayoutBehaviorDataSource(indexPaths: [stickyIndexPath])
+        collectionView.layout.behaviors.insert(StickyFooterLayoutBehavior(dataSource: stickyDataSource))
+        collectionView.layout.zIndexBehavior = .BottomUp
+
+        collectionView.setSection(section)
+        collectionView.layoutSubviews()
+
+        let expectation = expectationWithDescription("Invalidate Repeat Counts")
+
+        repeatCountDataSource.repeatCountHash = ["Brick": 16]
+        collectionView.invalidateRepeatCounts { (completed, insertedIndexPaths, deletedIndexPaths) in
+            expectation.fulfill()
+        }
+
+        waitForExpectationsWithTimeout(5, handler: nil)
+
+        collectionView.layoutSubviews()
+
+        let repeatCell = collectionView.cellForItemAtIndexPath(repeatIndexPath)!
+        let repeatAttributes = collectionView.layoutAttributesForItemAtIndexPath(repeatIndexPath)!
+        let layoutRepeatAttributes = collectionView.layout.layoutAttributesForItemAtIndexPath(repeatIndexPath)!
+        XCTAssertEqual(repeatAttributes.zIndex, layoutRepeatAttributes.zIndex)
+
+        let stickyCell = collectionView.cellForItemAtIndexPath(stickyIndexPath)!
+        let stickyAttributes = collectionView.layoutAttributesForItemAtIndexPath(stickyIndexPath)!
+        let layoutStickyAttributes = collectionView.layout.layoutAttributesForItemAtIndexPath(stickyIndexPath)!
+        XCTAssertEqual(stickyAttributes.zIndex, layoutStickyAttributes.zIndex)
+
+        let repeatIndex = repeatCell.layer.zPosition
+        let stickyIndex = stickyCell.layer.zPosition
+
+        XCTAssertTrue(repeatAttributes.zIndex < stickyAttributes.zIndex)
+        XCTAssertEqual(repeatAttributes.zIndex + 1, stickyAttributes.zIndex)
+        XCTAssertEqual(layoutRepeatAttributes.zIndex + 1, layoutStickyAttributes.zIndex)
+        XCTAssertEqual(repeatIndex + 1, stickyIndex)
+    }
 }

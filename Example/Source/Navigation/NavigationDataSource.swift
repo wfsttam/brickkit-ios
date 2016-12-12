@@ -107,6 +107,8 @@ class NavigationDataSource {
     
     #if os(iOS)
     var InteractiveExamples = NavigationItem(title: "Interactive", subTitle: "Interactive Examples", viewControllers: [
+        InteractiveAlignViewController.self,
+        InteractiveAlignViewController2.self,
         BasicInteractiveViewController.self,
         BrickCollectionInteractiveViewController.self,
         HideBrickViewController.self,
@@ -115,7 +117,7 @@ class NavigationDataSource {
         ChangeNibBrickViewController.self,
         HideSectionsViewController.self,
         DynamicContentViewController.self,
-        InvalidateHeightViewController.self
+        InvalidateHeightViewController.self,
         ])
     #else
     var InteractiveExamples = NavigationItem(title: "Interactive", subTitle: "Interactive Examples", viewControllers: [
@@ -126,7 +128,8 @@ class NavigationDataSource {
         ChangeNibBrickViewController.self,
         HideSectionsViewController.self,
         DynamicContentViewController.self,
-        InvalidateHeightViewController.self
+        InvalidateHeightViewController.self,
+        InteractiveAlignViewController.self
         ])
     #endif
 }

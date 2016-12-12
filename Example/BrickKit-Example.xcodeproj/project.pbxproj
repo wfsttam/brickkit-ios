@@ -180,6 +180,8 @@
 		935D489C1DB7D1B10091AA39 /* ImagesInCollectionBrickHorizontalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 935D489A1DB7D1B10091AA39 /* ImagesInCollectionBrickHorizontalViewController.swift */; };
 		938996A51DF77A3200E0F4F1 /* AlignmentBrickViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 938996A41DF77A3200E0F4F1 /* AlignmentBrickViewController.swift */; };
 		938996A61DF77A3200E0F4F1 /* AlignmentBrickViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 938996A41DF77A3200E0F4F1 /* AlignmentBrickViewController.swift */; };
+		93D7E8691DFB52830031A6C2 /* InteractiveAlignViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93D7E8681DFB52830031A6C2 /* InteractiveAlignViewController.swift */; };
+		93D7E86A1DFB52830031A6C2 /* InteractiveAlignViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93D7E8681DFB52830031A6C2 /* InteractiveAlignViewController.swift */; };
 		93DE8B4A1DF744BB00324EC8 /* FillBrickViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 932365661DF449A500BE5183 /* FillBrickViewController.swift */; };
 		93EAFE2D1DB57D680036331C /* NavigationDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93EAFE291DB57D680036331C /* NavigationDetailViewController.swift */; };
 		93EAFE2E1DB57D680036331C /* NavigationMasterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93EAFE2A1DB57D680036331C /* NavigationMasterViewController.swift */; };
@@ -366,6 +368,7 @@
 		935D488F1DB7CCC70091AA39 /* ImagesInCollectionBrickViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImagesInCollectionBrickViewController.swift; sourceTree = "<group>"; };
 		935D489A1DB7D1B10091AA39 /* ImagesInCollectionBrickHorizontalViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImagesInCollectionBrickHorizontalViewController.swift; sourceTree = "<group>"; };
 		938996A41DF77A3200E0F4F1 /* AlignmentBrickViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlignmentBrickViewController.swift; sourceTree = "<group>"; };
+		93D7E8681DFB52830031A6C2 /* InteractiveAlignViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InteractiveAlignViewController.swift; sourceTree = "<group>"; };
 		93EAFE291DB57D680036331C /* NavigationDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NavigationDetailViewController.swift; sourceTree = "<group>"; };
 		93EAFE2A1DB57D680036331C /* NavigationMasterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NavigationMasterViewController.swift; sourceTree = "<group>"; };
 		93EAFE2B1DB57D680036331C /* NavigationTransition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NavigationTransition.swift; sourceTree = "<group>"; };
@@ -577,6 +580,7 @@
 				4E3BD7901DB1316400541900 /* HideSectionsViewController.swift */,
 				4E3BD7911DB1316400541900 /* InsertBrickViewController.swift */,
 				4E3BD7921DB1316400541900 /* InvalidateHeightViewController.swift */,
+				93D7E8681DFB52830031A6C2 /* InteractiveAlignViewController.swift */,
 			);
 			path = Interactive;
 			sourceTree = "<group>";
@@ -850,8 +854,9 @@
 				TargetAttributes = {
 					4E3BD5C61DB008CD00541900 = {
 						CreatedOnToolsVersion = 8.0;
+						DevelopmentTeam = W4Q4KQLX4M;
 						LastSwiftMigration = 0800;
-						ProvisioningStyle = Manual;
+						ProvisioningStyle = Automatic;
 					};
 					4E3BD6D41DB00F9F00541900 = {
 						CreatedOnToolsVersion = 8.0;
@@ -1013,6 +1018,7 @@
 				4E3BD8E71DB51E1200541900 /* BrickIdentifiers.swift in Sources */,
 				9327D03E1DB94A9500D65BCB /* NibLessViewController.swift in Sources */,
 				4E3BD7FA1DB1316400541900 /* StepperBrick.swift in Sources */,
+				93D7E8691DFB52830031A6C2 /* InteractiveAlignViewController.swift in Sources */,
 				4E8E10F41DB569E100B5BD90 /* EmbeddedSpotlightSnapScrollingViewController.swift in Sources */,
 				4E3BD7BC1DB1316400541900 /* AppDelegate.swift in Sources */,
 				935D48901DB7CCC70091AA39 /* ImagesInCollectionBrickViewController.swift in Sources */,
@@ -1049,6 +1055,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4E3BD8ED1DB521C200541900 /* CoverFlowViewScrollingController.swift in Sources */,
+				93D7E86A1DFB52830031A6C2 /* InteractiveAlignViewController.swift in Sources */,
 				4E3BD8011DB1316400541900 /* BaseRepeatBrickViewController.swift in Sources */,
 				4E3BD85D1DB1316400541900 /* StickingFooterBaseViewController.swift in Sources */,
 				4E3BD84F1DB1316400541900 /* SimpleRepeatFixedWidthViewController.swift in Sources */,
@@ -1244,7 +1251,8 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
-				DEVELOPMENT_TEAM = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = W4Q4KQLX4M;
 				INFOPLIST_FILE = "$(SRCROOT)/Source/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.wafair.BrickKit-Example";
@@ -1259,7 +1267,8 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
-				DEVELOPMENT_TEAM = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = W4Q4KQLX4M;
 				INFOPLIST_FILE = "$(SRCROOT)/Source/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.wafair.BrickKit-Example";

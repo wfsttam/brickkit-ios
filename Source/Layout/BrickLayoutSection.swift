@@ -202,8 +202,10 @@ internal class BrickLayoutSection {
 
     private func invalidateAttributes(attributes: BrickLayoutAttributes) {
         attributes.isEstimateSize = true
-        attributes.originalFrame.size = .zero
-        attributes.frame.size = .zero
+//        attributes.originalFrame.size = .zero
+//        attributes.frame.size = .zero
+        attributes.originalFrame.size.width = 0
+        attributes.frame.size.width = 0
     }
 
     func update(height height: CGFloat, at index: Int, updatedAttributes: OnAttributesUpdatedHandler?) {
@@ -381,7 +383,7 @@ internal class BrickLayoutSection {
 
 
         if brickDebug {
-            printAttributes()
+//            printAttributes()
         }
     }
 
@@ -449,11 +451,11 @@ internal class BrickLayoutSection {
             let shouldIterateRow: Bool
             if _dataSource.isAlignRowHeights(in: self) {
                 shouldIterateRow = true
-            } else if alignment != .Left { // By default, the bricks are left aligned
-                // Only iterate row if the bricks don't already fill the whole row width
-                shouldIterateRow = brickAttributes.originalFrame.maxX < (sectionWidth - edgeInsets.right + origin.x)
+//            } else if alignment != .Left { // By default, the bricks are left aligned
+//                // Only iterate row if the bricks don't already fill the whole row width
+//                shouldIterateRow = brickAttributes.originalFrame.maxX < (sectionWidth - edgeInsets.right + origin.x)
             } else {
-                shouldIterateRow = false
+                shouldIterateRow = true
             }
 
             if shouldIterateRow {
@@ -486,6 +488,10 @@ internal class BrickLayoutSection {
             rowAttributes.insert(brickAttributes, atIndex: 0) // insert at the front, so the attributes are sorted by lowest first
             rowWidthWithoutInsets += brickAttributes.originalFrame.width
             currentIndex -= 1
+        }
+
+        guard rowAttributes.count > 0 else {
+            return
         }
 
         let edgeInsets = _dataSource.edgeInsets(in: self)
@@ -521,7 +527,7 @@ internal class BrickLayoutSection {
 
         // Iterate over the attributes (starting from the first one) and update each frame
         for brickAttributes in rowAttributes {
-            let oldFrame = brickAttributes.originalFrame
+            let oldFrame = brickAttributes.frame
             var newFrame = oldFrame
             if alignRowHeights {
                 newFrame.size.height = maxHeight

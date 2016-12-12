@@ -204,7 +204,7 @@ extension BrickCollectionView {
     ///
     /// - parameter completion: A completion handler block to execute when all of the operations are finished. This block takes a single Boolean parameter that contains the value true if all of the related animations completed successfully or false if they were interrupted. This parameter may be nil.
     public func invalidateBricks(completion: ((Bool) -> Void)? = nil) {
-        self.invalidateRepeatCountsWithoutPerformBatchUpdates(false)
+//        self.invalidateRepeatCountsWithoutPerformBatchUpdates(false)
         self.performBatchUpdates({
             self.reloadSections(NSIndexSet(indexesInRange: NSMakeRange(0, self.numberOfSections())))
             self.collectionViewLayout.invalidateLayoutWithContext(BrickLayoutInvalidationContext(type: .Invalidate))
@@ -290,12 +290,12 @@ extension BrickCollectionView {
     /// Invalidate all the repeat counts of the given
     ///
     /// - parameter completion: Completion Block
-    public func invalidateRepeatCounts(reloadAllSections: Bool = false, completion: ((completed: Bool, insertedIndexPaths: [NSIndexPath], deletedIndexPaths: [NSIndexPath]) -> Void)? = nil) {
+    public func invalidateRepeatCounts(reloadAllSections: Bool = false, fixedDeletedIndexPaths: [NSIndexPath]? = nil, completion: ((completed: Bool, insertedIndexPaths: [NSIndexPath], deletedIndexPaths: [NSIndexPath]) -> Void)? = nil) {
         var insertedIndexPaths: [NSIndexPath]!
         var deletedIndexPaths: [NSIndexPath]!
 
         self.performBatchUpdates({
-            let result = self.invalidateRepeatCountsWithoutPerformBatchUpdates(reloadAllSections)
+            let result = self.invalidateRepeatCountsWithoutPerformBatchUpdates(reloadAllSections, fixedDeletedIndexPaths: fixedDeletedIndexPaths)
             insertedIndexPaths = result.insertedIndexPaths
             deletedIndexPaths = result.deletedIndexPaths
             }) { (completed) in
@@ -303,7 +303,7 @@ extension BrickCollectionView {
         }
     }
 
-    private func invalidateRepeatCountsWithoutPerformBatchUpdates(reloadAllSections: Bool) -> (insertedIndexPaths: [NSIndexPath], deletedIndexPaths: [NSIndexPath]) {
+    private func invalidateRepeatCountsWithoutPerformBatchUpdates(reloadAllSections: Bool, fixedDeletedIndexPaths: [NSIndexPath]? = nil) -> (insertedIndexPaths: [NSIndexPath], deletedIndexPaths: [NSIndexPath]) {
 
         let brickSection = self.section
 
@@ -320,7 +320,7 @@ extension BrickCollectionView {
             let newCount = newCounts[section]! //We can unwrap safely, because the indexes should always be the same
 
             let sameCount = newCount == oldCount
-            if !sameCount || reloadAllSections {
+            if reloadAllSections {
                 sectionsToReload.addIndex(section)
             }
 
@@ -352,6 +352,10 @@ extension BrickCollectionView {
             if let sectionIndexPath = brickSection.indexPathForSection(section, in: self.collectionInfo) {
                 reloadIndexPaths.append(sectionIndexPath)
             }
+        }
+
+        if let fixed = fixedDeletedIndexPaths {
+            deletedIndexPaths = fixed
         }
 
         if !insertedIndexPaths.isEmpty {
@@ -509,6 +513,9 @@ extension BrickCollectionView: UICollectionViewDataSource {
         let identifier = brickCollectionView.identifierForBrick(brick, collectionView: collectionView)
 
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier(identifier, forIndexPath: indexPath) as! BaseBrickCell
+
+//        let attributes = collectionView.layoutAttributesForItemAtIndexPath(indexPath)!
+//        cell.layer.zPosition = CGFloat(attributes.zIndex)
 
         if let brickCell = cell as? BrickCell {
             if var resizable = brickCell as? AsynchronousResizableCell {

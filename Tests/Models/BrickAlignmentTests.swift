@@ -315,6 +315,35 @@ extension BrickAlignmentTests {
         XCTAssertEqual(cell3?.frame, CGRect(x: 190, y: 0, width: 50, height: 50))
         
     }
+
+    func testThatAddingABrickAlignsProperly() {
+        collectionView.registerBrickClass(DummyBrick.self)
+
+        let section = BrickSection(bricks: [
+            DummyBrick("BRICK", width: .Ratio(ratio: 1/3), height: .Fixed(size: 50)),
+            ], edgeInsets: UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10), alignment: .Center)
+        let repeatCountDataSource = FixedRepeatCountDataSource(repeatCountHash: ["BRICK": 2])
+        section.repeatCountDataSource = repeatCountDataSource
+        collectionView.setSection(section)
+        collectionView.layoutSubviews()
+
+        repeatCountDataSource.repeatCountHash = ["BRICK": 3]
+        let expectation = expectationWithDescription("Invalidat Bricks")
+
+        collectionView.invalidateRepeatCounts(false) { (completed, insertedIndexPaths, deletedIndexPaths) in
+            expectation.fulfill()
+        }
+
+        waitForExpectationsWithTimeout(5, handler: nil)
+
+        let cell1 = collectionView.cellForItemAtIndexPath(NSIndexPath(forItem: 0, inSection: 1))
+        XCTAssertEqual(cell1?.frame, CGRect(x: 10, y: 10, width: 100, height: 50))
+        let cell2 = collectionView.cellForItemAtIndexPath(NSIndexPath(forItem: 1, inSection: 1))
+        XCTAssertEqual(cell2?.frame, CGRect(x: 110, y: 10, width: 100, height: 50))
+        let cell3 = collectionView.cellForItemAtIndexPath(NSIndexPath(forItem: 2, inSection: 1))
+        XCTAssertEqual(cell3?.frame, CGRect(x: 210, y: 10, width: 100, height: 50))
+
+    }
 }
 
 // MARK: - Justified Align

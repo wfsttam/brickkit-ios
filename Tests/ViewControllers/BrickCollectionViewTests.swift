@@ -334,7 +334,6 @@ class BrickCollectionViewTests: XCTestCase {
 
         cell = brickView.cellForItemAtIndexPath(NSIndexPath(forItem: 0, inSection: 1)) as? CollectionBrickCell
         XCTAssertEqual(cell?.frame, CGRect(x: 0, y: 0, width: 320, height: 100))
-
     }
 
     func testRepeatCountMakesLabelGoTooBig() {

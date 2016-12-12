@@ -22,7 +22,7 @@ class SimpleRepeatFixedWidthViewController: BaseRepeatBrickViewController {
 
         repeatLabel.width = .Fixed(size: 80)
         repeatLabel.height = .Auto(estimate: .Fixed(size: 38.0))
-        brickCollectionView.section.alignment = .Justified
+//        brickCollectionView.section.alignment = .Justified
     }
 
 }
