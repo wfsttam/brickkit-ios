@@ -67,11 +67,6 @@ class NavigationMasterViewController: BrickViewController {
         // Setup hide behavior
         brickCollectionView.layout.hideBehaviorDataSource = self
 
-        #if os(iOS)
-            // Set the backbar button to empty string
-            navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .Plain, target: nil, action: nil)
-        #endif
-
         // Register Bricks
         registerNib(LabelBrickNibs.Chevron, forBrickWithIdentifier: NavigationIdentifiers.navItemBrick)
         registerBrickClass(LabelBrick.self)
@@ -117,7 +112,19 @@ extension NavigationMasterViewController: BrickCellTapDelegate {
 
     func didTapBrickCell(brickCell: BrickCell) {
         let index = brickCell.index
-        self.dataSource.selectedItem = self.dataSource.item(for: index)
+
+//        if self.indexOfSelectedBrick == nil {
+            self.dataSource.selectedItem = self.dataSource.item(for: index)
+//
+//            self.indexOfSelectedBrick = dataSource.selectedIndex
+//            brickCollectionView.reloadBrickWithIdentifier(NavigationIdentifiers.navItemBrick, andIndex: dataSource.selectedIndex!, invalidate: false)
+//        } else {
+//            self.indexOfSelectedBrick = nil
+//            brickCollectionView.reloadBricksWithIdentifiers([NavigationIdentifiers.navItemBrick], shouldReloadCell: true)
+//        }
+//
+//        return
+
         let navigationDetailViewController = NavigationDetailViewController()
         navigationDetailViewController.navItem = self.dataSource.selectedItem
         self.navigationController?.pushViewController(navigationDetailViewController, animated: true)
@@ -196,6 +203,8 @@ extension NavigationMasterViewController: OffsetLayoutBehaviorDataSource {
 extension NavigationMasterViewController: HideBehaviorDataSource {
 
     func hideBehaviorDataSource(shouldHideItemAtIndexPath indexPath: NSIndexPath, withIdentifier identifier: String, inCollectionViewLayout collectionViewLayout: UICollectionViewLayout) -> Bool {
+//        return false
+
         switch identifier {
         case NavigationIdentifiers.navItemBrick:
             if let selectedIndex = indexOfSelectedBrick {

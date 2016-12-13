@@ -60,7 +60,7 @@ class InvalidateHeightViewController: BrickViewController {
         default: brick.height = .Fixed(size: 200)
         }
 
-        self.brickCollectionView.invalidateBricks()
+        self.brickCollectionView.invalidateBricks(false)
         self.updateNavigationItem()
     }
 

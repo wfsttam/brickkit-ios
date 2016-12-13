@@ -43,7 +43,7 @@ class RepeatCollectionBrickViewController: BrickApp.BaseBrickController, BrickRe
                 ])
             ], inset: 10, edgeInsets: UIEdgeInsets(top: 5, left: 5, bottom: 5, right: 5))
 
-        self.registerBrickClass(CollectionBrick.self)
+        self.registerBrickClass(CollectionBrick.self)   
 
         let section = BrickSection(bricks: [
             CollectionBrick(RepeatCollectionBrickViewController.Identifiers.collectionBrick, dataSource: self, brickTypes: [LabelBrick.self, ImageBrick.self])

@@ -342,10 +342,10 @@ extension BrickFlowLayout {
     }
 
     public override func layoutAttributesForItemAtIndexPath(indexPath: NSIndexPath) -> UICollectionViewLayoutAttributes? {
-        print("layoutAttributesForItemAtIndexPath: \(indexPath)")
 
         if let attributes = sections?[indexPath.section]?.attributes[indexPath.item] {
             attributes.setAutoZIndex(zIndexer.zIndex(for: indexPath))
+            print("layoutAttributesForItemAtIndexPath: \(indexPath): \(attributes.frame)")
             return attributes
         } else if indexPath.section < _collectionView.numberOfSections() && indexPath.row < _collectionView.numberOfItemsInSection(indexPath.section) {
 
@@ -672,22 +672,28 @@ extension BrickFlowLayout {
         print("Inserted IndexPaths: \(insertedIndexPaths)")
         print("Deleted IndexPaths: \(deletedIndexPaths)")
         print("Reload IndexPaths: \(reloadIndexPaths)")
+        reloadItems(at: reloadIndexPaths)
+
     }
 
-    public override func finalizeCollectionViewUpdates() { // called inside an animation block after the update
-        for indexPath in reloadIndexPaths {
+    private func reloadItems(at indexPaths: [NSIndexPath]) {
+        for indexPath in indexPaths {
             if indexPath.item >= collectionView?.numberOfItemsInSection(indexPath.section)  {
                 continue
             }
 
             switch _dataSource.brickLayout(self, brickLayoutTypeForItemAtIndexPath: indexPath) {
             case .Brick:
-                _collectionView.performBatchUpdates({ 
-                    self.invalidateLayoutWithContext(BrickLayoutInvalidationContext(type: .InvalidateHeight(indexPath: indexPath)))
+                _collectionView.performBatchUpdates({
+//                    BrickLayoutInvalidationContext(type: .InvalidateHeight(indexPath: indexPath)).invalidateWithLayout(self)
+                                        self.invalidateLayoutWithContext(BrickLayoutInvalidationContext(type: .InvalidateHeight(indexPath: indexPath)))
                     }, completion: nil)
             default: break
             }
         }
+    }
+
+    public override func finalizeCollectionViewUpdates() { // called inside an animation block after the update
 
         insertedIndexPaths = []
         deletedIndexPaths = []

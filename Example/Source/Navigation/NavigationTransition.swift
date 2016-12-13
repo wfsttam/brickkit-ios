@@ -76,10 +76,12 @@ extension NavigationTransition: UIViewControllerAnimatedTransitioning {
             // Scroll to top
             masterVC.brickCollectionView.contentOffset = topContentOffset
 
+
             // Animate the detail brick to go to the top and the other hide
             masterVC.indexOfSelectedBrick = masterVC.dataSource.selectedIndex
-            masterVC.brickCollectionView.reloadBrickWithIdentifier(NavigationIdentifiers.navItemBrick, andIndex: masterVC.dataSource.selectedIndex!, invalidate: false)
-            masterVC.brickCollectionView.invalidateVisibility() { completed in
+//            masterVC.brickCollectionView.reloadBrickWithIdentifier(NavigationIdentifiers.navItemBrick, andIndex: masterVC.dataSource.selectedIndex!, invalidate: false)
+            masterVC.brickCollectionView.invalidateBricks(false) { completed in
+//            masterVC.brickCollectionView.invalidateVisibility() { completed in
                 if let containerView = containerView {
                     // Add/remove viewcontroller views
                     masterVC.view.removeFromSuperview()
@@ -116,12 +118,12 @@ extension NavigationTransition: UIViewControllerAnimatedTransitioning {
                     masterVC.brickCollectionView.contentOffset = self.masterContentOffset
 
                     // Invalidate the selected brick
-                    let index = masterVC.indexOfSelectedBrick!
+//                    let index = masterVC.indexOfSelectedBrick!
                     masterVC.indexOfSelectedBrick = nil
-                    masterVC.brickCollectionView.reloadBrickWithIdentifier(NavigationIdentifiers.navItemBrick, andIndex: index, invalidate: false)
+//                    masterVC.brickCollectionView.reloadBrickWithIdentifier(NavigationIdentifiers.navItemBrick, andIndex: index, invalidate: false)
                     
                     // Invalidate bricks, so they animate back
-                    masterVC.brickCollectionView.invalidateVisibility(completion)
+                    masterVC.brickCollectionView.invalidateBricks(false, completion: completion)
                     
                     }, completion: nil)
             }

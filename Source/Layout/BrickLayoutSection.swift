@@ -565,10 +565,15 @@ internal class BrickLayoutSection {
 
         let indexPath = NSIndexPath(forItem: index, inSection: sectionIndex)
 
-        var width = widthAtIndex(index, startingAt: x - edgeInsets.left - origin.x, dataSource: dataSource)
-
         var brickAttributes: BrickLayoutAttributes! = attributes[index]
         let existingAttribute: Bool = brickAttributes != nil
+
+        var width: CGFloat
+//        if existingAttribute && !invalidate {
+//            width = brickAttributes.originalFrame.width
+//        } else {
+            width = widthAtIndex(index, startingAt: x - edgeInsets.left - origin.x, dataSource: dataSource)
+//        }
 
         let shouldBeOnNextRow: Bool
         switch dataSource.scrollDirection {
@@ -643,18 +648,19 @@ internal class BrickLayoutSection {
         // Prepare the datasource that size calculation will happen
         dataSource.prepareForSizeCalculation(for: brickAttributes, containedIn: width, origin: cellOrigin, invalidate: invalidate, in: self, updatedAttributes: updatedAttributes)
 
-        if let brickFrame = oldOriginalFrame where brickFrame.width == width && !invalidate {
+        if let brickFrame = oldOriginalFrame where /* brickFrame.width == width && */ !invalidate {
             if let customHeight = customHeightProvider?(attributes: brickAttributes) {
                 height = customHeight
             } else {
                 height = brickFrame.height
             }
+            width = brickFrame.width
         } else {
             let size = dataSource.size(for: brickAttributes, containedIn: width, in: self)
             height = size.height
             width = size.width
         }
-
+        print("Setting: \(indexPath) to width: \(width)")
 
         var brickFrame = CGRect(origin: cellOrigin, size: CGSize(width: width, height: height))
 

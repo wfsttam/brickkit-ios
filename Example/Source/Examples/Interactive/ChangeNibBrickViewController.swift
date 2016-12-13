@@ -49,6 +49,8 @@ class ChangeNibBrickViewController: BrickViewController, LabelBrickCellDataSourc
             cell.configure()
         }
 
+        self.brickCollectionView.layout.appearBehavior = BrickAppearBottomBehavior()
+
         repeatBrick = LabelBrick(BrickIdentifiers.repeatLabel, width: .Ratio(ratio: widthRatio), height: .Auto(estimate: .Fixed(size: 50)), backgroundColor: .brickGray5, dataSource: self)
 
         let section = BrickSection(bricks: [
@@ -99,9 +101,7 @@ class ChangeNibBrickViewController: BrickViewController, LabelBrickCellDataSourc
         repeatBrick.width = .Ratio(ratio: widthRatio)
 
         if reload {
-//            UIView.performWithoutAnimation {
-                brickCollectionView.invalidateBricks()
-//            }
+            brickCollectionView.invalidateBricks(false)
         }
     }
     
