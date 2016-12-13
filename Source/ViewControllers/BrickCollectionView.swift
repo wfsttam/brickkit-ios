@@ -204,11 +204,11 @@ extension BrickCollectionView {
     ///
     /// - parameter completion: A completion handler block to execute when all of the operations are finished. This block takes a single Boolean parameter that contains the value true if all of the related animations completed successfully or false if they were interrupted. This parameter may be nil.
     public func invalidateBricks(reloadSections: Bool = true, completion: ((Bool) -> Void)? = nil) {
-//        self.invalidateRepeatCountsWithoutPerformBatchUpdates(false)
+        self.invalidateRepeatCountsWithoutPerformBatchUpdates(reloadSections)
         self.performBatchUpdates({
-            if reloadSections {
-                self.reloadSections(NSIndexSet(indexesInRange: NSMakeRange(0, self.numberOfSections())))
-            }
+//            if reloadSections {
+//                self.reloadSections(NSIndexSet(indexesInRange: NSMakeRange(0, self.numberOfSections())))
+//            }
             self.collectionViewLayout.invalidateLayoutWithContext(BrickLayoutInvalidationContext(type: .Invalidate))
             }, completion: { completed in
                 completion?(completed)

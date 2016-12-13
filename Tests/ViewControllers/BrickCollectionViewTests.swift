@@ -641,25 +641,31 @@ class BrickCollectionViewTests: XCTestCase {
         XCTAssertNil(brickView.layout.layoutAttributesForItemAtIndexPath(NSIndexPath(forItem: 0, inSection: 1)))
     }
 
-//    func testThatBrickGetsUpdatedCorrectly() {
-//        brickView.registerBrickClass(DummyBrick.self)
-//        let brick = DummyBrick("Brick", width: .Fixed(size: 100), height: .Fixed(size: 50))
-//        let section = BrickSection(bricks: [
-//            brick
-//            ])
-//        let repeatDataSource = FixedRepeatCountDataSource(repeatCountHash: ["Brick": 20])
-//        section.repeatCountDataSource = repeatDataSource
-//        brickView.setSection(section)
-//        brickView.layoutSubviews()
-//
-//        var cell: UICollectionViewCell!
-//        cell = brickView.cellForItemAtIndexPath(NSIndexPath(forItem: 0, inSection: 1))
-//        XCTAssertEqual(cell.frame, CGRect(x: 0, y: 0, width: 100, height: 50))
-//
-//
-//        brickCollectionView.reloadBrickWithIdentifier(NavigationIdentifiers.navItemBrick, andIndex: dataSource.selectedIndex!, invalidate: false)
-//
-//
-//    }
+    func testThatRepeatCountGetsUpdatedWithReloadBricks() {
+        brickView.registerBrickClass(DummyBrick.self)
+
+        let brick = DummyBrick("Brick", width: .Fixed(size: 100), height: .Fixed(size: 50))
+        let section = BrickSection(bricks: [
+            brick
+            ])
+        let repeatDataSource = FixedRepeatCountDataSource(repeatCountHash: ["Brick": 1])
+        section.repeatCountDataSource = repeatDataSource
+        brickView.setSection(section)
+        brickView.layoutSubviews()
+
+        XCTAssertNotNil(brickView.cellForItemAtIndexPath(NSIndexPath(forItem: 0, inSection: 1)))
+        XCTAssertNil(brickView.cellForItemAtIndexPath(NSIndexPath(forItem: 1, inSection: 1)))
+
+        repeatDataSource.repeatCountHash = ["Brick": 2]
+        let expectation = expectationWithDescription("Invalidate Bricks")
+        brickView.invalidateBricks() { (completed) in
+            expectation.fulfill()
+        }
+
+        waitForExpectationsWithTimeout(5, handler: nil)
+        
+        XCTAssertNotNil(brickView.cellForItemAtIndexPath(NSIndexPath(forItem: 0, inSection: 1)))
+        XCTAssertNotNil(brickView.cellForItemAtIndexPath(NSIndexPath(forItem: 1, inSection: 1)))
+    }
 
 }
