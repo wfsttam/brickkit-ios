@@ -206,9 +206,9 @@ extension BrickCollectionView {
     public func invalidateBricks(reloadSections: Bool = true, completion: ((Bool) -> Void)? = nil) {
         self.invalidateRepeatCountsWithoutPerformBatchUpdates(reloadSections)
         self.performBatchUpdates({
-//            if reloadSections {
-//                self.reloadSections(NSIndexSet(indexesInRange: NSMakeRange(0, self.numberOfSections())))
-//            }
+            if reloadSections {
+                self.reloadSections(NSIndexSet(indexesInRange: NSMakeRange(0, self.numberOfSections())))
+            }
             self.collectionViewLayout.invalidateLayoutWithContext(BrickLayoutInvalidationContext(type: .Invalidate))
             }, completion: { completed in
                 completion?(completed)

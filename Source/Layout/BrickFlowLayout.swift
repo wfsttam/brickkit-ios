@@ -336,7 +336,6 @@ extension BrickFlowLayout {
         for (_, section) in sections {
             attributes.appendContentsOf(section.layoutAttributesForElementsInRect(rect, with: zIndexer))
         }
-        print("layoutAttributesForElementsInRect: \(attributes.count)")
 
         return attributes
     }
@@ -345,7 +344,6 @@ extension BrickFlowLayout {
 
         if let attributes = sections?[indexPath.section]?.attributes[indexPath.item] {
             attributes.setAutoZIndex(zIndexer.zIndex(for: indexPath))
-            print("layoutAttributesForItemAtIndexPath: \(indexPath): \(attributes.frame)")
             return attributes
         } else if indexPath.section < _collectionView.numberOfSections() && indexPath.row < _collectionView.numberOfItemsInSection(indexPath.section) {
 

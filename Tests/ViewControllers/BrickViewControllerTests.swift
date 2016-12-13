@@ -639,7 +639,7 @@ class BrickViewControllerTests: XCTestCase {
 
         let expectation = expectationWithDescription("Invalidate Bricks")
 
-        brickViewController.brickCollectionView.invalidateBricks() { completed in
+        brickViewController.brickCollectionView.invalidateBricks(true) { completed in
             expectation.fulfill()
         }
 
